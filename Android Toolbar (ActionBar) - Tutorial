@@ -1,3 +1,31 @@
+//it will mkae after MainActivity
+//make ChildActivity.java
+package com.example.codeforactionbar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class ChildActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_child);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle("Home");
+        actionbar.setSubtitle("Back to home page");
+        actionbar.setHomeButtonEnabled(true);
+    }
+}
+
+
+
+
+
+
 //AndroidManifest.xml
 //mkae sure Write   <activity android:name=".ChildActivity"  android:parentActivityName=".MainActivity" />
 //set parent Activity & child Activity in android manifest
@@ -26,3 +54,8 @@
     </application>
 
 </manifest>
+
+
+
+
+
