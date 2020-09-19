@@ -1,0 +1,86 @@
+//Activity File
+
+package com.example.codeforactionbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
+public class ChildActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_child);
+
+        SeekBar seekbar = findViewById(R.id.seekBar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                Toast.makeText(getApplicationContext(),"SeekBar Progress ="+progress,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //Toast.makeText(getApplicationContext(),"SeekBar Touch Start",Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(getApplicationContext(),"SeekBar Touch Start",Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM|Gravity.RIGHT, 0, 0);
+                toast.show();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(getApplicationContext(),"SeekBar Touch Stop",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+
+
+
+
+
+
+
+//Xml Layout for seekbar
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ChildActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="Using ScrollBar"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="italic" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="#ECECE4"/>
+
+
+
+</LinearLayout>
+
+
+
+
+
+
