@@ -1,0 +1,84 @@
+package com.example.frameapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity {
+    Button btn ;
+    ImageView imageView;
+    int index = -1;
+int Frames[] ={R.drawable.a,R.drawable.b,R.drawable.c}; //images array 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = findViewById(R.id.imageView);
+        btn = findViewById(R.id.button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(index<Frames.length-1)
+                    index++;
+                else
+                    index = 0;
+                imageView.setImageResource(Frames[index]);
+            }
+        });
+    }
+}
+
+
+
+
+//Layout Xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:scaleX="-1"
+            android:scaleType="fitXY"
+            android:src="@drawable/zuckerberg" /> //image 
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/b" /> //image
+        <Button
+            android:id="@+id/button"
+            android:layout_gravity="center|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change" />
+
+    </FrameLayout>
+
+
+</LinearLayout>
