@@ -1,0 +1,124 @@
+//SOURCE CODE JAVA ---------------------------------------------------------------------------------------------------------------------------------------
+
+public class MainActivity extends AppCompatActivity {
+    WebView webView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        webView =  findViewById(R.id.webView);
+        //Intiallize webSetting
+        WebSettings webSetting = webView.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+
+        //Initialize connectivityManager
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        //get active network info
+        NetworkInfo networkInfo =connectivityManager.getActiveNetworkInfo();
+        //Checknetwork status
+        if(networkInfo == null|| !networkInfo.isConnected() || !networkInfo.isAvailable()){
+            //when internet is inactive
+            //Initialize dialog
+            Dialog dialog = new Dialog(this);
+            //Set content view
+            dialog.setContentView(R.layout.alert_dialog);
+            //set outside touch
+            dialog.setCanceledOnTouchOutside(false);
+            //Set dialog width & height
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            //Set transparent background
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            //Set animation
+            dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
+            //Initialize dialog variable
+
+            Button btnTryAgain = dialog.findViewById(R.id.btn_try_again);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recreate();
+                }
+            });
+            //Show Dialog
+            dialog.show();;
+        }else{
+            //When Internet active
+
+            //Load url
+            webView.loadUrl("https://m.youtube.com");
+
+        }
+
+    }
+}
+//XML LAYOUT--------------------------------------------------------------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/webView"/>
+
+</RelativeLayout>
+
+//RESOURCES FILES ------------------------------------------------------------------------------------------------------------------------
+
+//----------------(A) ALERT DIALOG ------------------------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="@drawable/bg_round">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_internet"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ooops !"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Iternet Connection found.\n Check your connection"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        android:fontFamily="serif"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_try_again"
+        android:text="Try Again"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="30dp"
+        android:background="@android:drawable/bottom_bar"/>
+
+
+</LinearLayout>
+
+//----------------(B) SHAPE OF DIALOG -----------------------------------------------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#009688"/>
+    <corners android:radius="20dp"/>
+</shape>
