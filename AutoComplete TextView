@@ -1,0 +1,46 @@
+//Java Code
+public class MainActivity extends AppCompatActivity {
+
+AutoCompleteTextView autoCompleteTextView;
+TextView textView;
+String details[] = {"Personal Details","Work Details","Graduation Details","Private Details"};
+ArrayAdapter<String> adapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        autoCompleteTextView = findViewById(R.id.ac_text_view);
+        textView = findViewById(R.id.textView2);
+        
+    adapter = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,details);
+    
+    //get  suggestion after the number of word types
+        autoCompleteTextView.setThreshold(1);
+        //set adapter
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                textView.setText(adapter.getItem(i));
+            }
+        });
+
+    }
+}
+//XML Layout
+<AutoCompleteTextView
+        android:id="@+id/ac_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:hint="Search..."
+        android:padding="12dp"/>
+        
+        <TextView
+        android:id="@+id/textView2"
+        android:layout_width="254dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="112dp"
+        android:text="Personal Info."
+        android:textSize="25sp"/>
