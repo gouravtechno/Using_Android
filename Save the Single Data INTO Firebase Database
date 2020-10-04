@@ -1,0 +1,32 @@
+   private FirebaseUser mCurrentUser;
+    private DatabaseReference databaseReference;
+    
+     mstatus = findViewById(R.id.status_input);                           //textInputLayout with Edittext
+        updateStatus_Btn = findViewById(R.id.status_save_btn);            //Status Change button
+        
+    //inside onCreate()
+    mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();           //get currentUser info(UId) of Firebase Authentication
+        String uid = mCurrentUser.getUid();                               //assign the currentUser info(UId) to Sting datatype
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(uid);//get references through current User uid from F_database for access data.
+
+
+    updateStatus_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+                String new_status = mstatus.getEditText().getText().toString();  //get text  from Edittext & asssign to new String variable
+                    //save the data into database (status column) through database reference use
+                databaseReference.child("status").setValue(new_status).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            
+                            Toast.makeText(getApplicationContext(), "Successfull", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Can't change, please try again", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        });
