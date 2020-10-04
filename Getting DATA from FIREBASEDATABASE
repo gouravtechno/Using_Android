@@ -1,0 +1,34 @@
+#Getting DATA on activity text fields from  FIREBASEDATABASE
+
+
+private FirebaseUser mCurrentuser;
+private DatabaseReference databaseReference
+
+//onCreate();
+
+display_name = findViewById(R.id.display_name);//Display Name TextField
+        display_status = findViewById(R.id.status_name);//Status TextField
+        profile_pic = findViewById(R.id.circleImageView);//Image View
+				
+ mCurrentuser = FirebaseAuth.getInstance().getCurrentUser(); //get currentUser info(UId) of Firebase Authentication
+        String uid = mCurrentuser.getUid();                         //assign the currentUser info(UId) to Sting datatype
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(uid); //get references through current User uid from F_database for access data.
+        //get the data from database
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //used for reterive or update the data
+                String name = dataSnapshot.child("name").getValue().toString();
+                String status = dataSnapshot.child("status").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
+                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                //get data from database & show on status activity
+                display_name.setText(name);
+                display_status.setText(status);
+                //to retrieve the image from database add picaso dependencies library.
+                //implementation 'com.squareup.picasso:picasso:2.71828'
+                Picasso.get().load(image).into(profile_pic);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
